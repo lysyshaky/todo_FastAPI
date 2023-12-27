@@ -33,7 +33,10 @@ user_dependency = Annotated[Session, Depends(get_current_user)]
 @router.get("/todo", status_code=status.HTTP_200_OK)
 async def read_all(user: user_dependency, db: db_dependency):
     if user is None or user.get("user_role") != "admin":
-        raise HTTPException(status_code=401, detail="Authentication failed")
+        raise HTTPException(
+            status_code=401,
+            detail="You don't have admin permissions or not authenticated",
+        )
     return db.query(Todos).all()
 
 
@@ -42,7 +45,10 @@ async def delete_todo(
     user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)
 ):
     if user is None or user.get("user_role") != "admin":
-        raise HTTPException(status_code=401, detail="Authentication failed")
+        raise HTTPException(
+            status_code=401,
+            detail="You don't have admin permissions or not authenticated",
+        )
     todo_model = db.query(Todos).filter(Todos.id == todo_id).first()
     if todo_model is not None:
         db.delete(todo_model)

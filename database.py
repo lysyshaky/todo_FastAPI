@@ -4,6 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./todoapp.db"
+# SQLALCHEMY_DATABASE_URL = "postgresql://postgres:123456@localhost:5432/TodoDB"
+# SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:Lysyshaky@127.0.0.1:3306/TodoDB"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
